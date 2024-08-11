@@ -1,0 +1,82 @@
+/* SCROLL PERSONALIZADO / CARLOS */
+*::-webkit-scrollbar{
+    width: 8px;
+}
+
+*::-webkit-scrollbar-track{
+    background-color: transparent;
+}
+
+*::-webkit-scrollbar-thumb{
+    background-color: #6c757d;
+    border-radius: 10px;
+}
+
+
+.cursor {
+    cursor: pointer;
+}
+
+.close,
+.mailbox-attachment-close {
+    font-size: 2.0rem;
+    color: #ffffff;
+    opacity: 1 !important;
+}
+
+.close:hover,
+.mailbox-attachment-close:hover {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+/* .human-body {
+    width: 207px;
+    position: relative;
+    padding-top: 240px;
+    height: 260px;
+    display: block;
+    margin: 40px auto;
+} */
+
+.human-body svg:hover {
+    cursor: pointer;
+}
+
+.human-body svg path:hover {
+    fill: #a80000;
+}
+
+.human-body svg {
+    /* position: absolute; */
+    left: 50%;
+    fill: #000;
+}
+
+.human-body3 svg:hover {
+    cursor: pointer;
+}
+
+.human-body3 svg path:hover {
+    fill: #a80000;
+}
+
+.human-body3 svg {
+    /* position: absolute; */
+    left: 50%;
+    fill: #000;
+}
+
+
+#area #data {
+    color: black;
+
+}
+
+.inner {
+    fill: #000000;
+}
+
+.inner-new-color {
+    fill: #ff00ff;
+}
