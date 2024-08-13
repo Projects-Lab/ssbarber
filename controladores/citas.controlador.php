@@ -1,76 +1,66 @@
 <?php
-require_once '../modelos/citas.modelo.php';
+require "../modelos/citas.modelo.php";
 
-class ControladorCitas
-{
+class ControladorCitas{
 
-    static public function ctrListarMedicos()
+    static public function Listar($tabla, $item, $valor)
     {
-        return ModeloCitas::mdlListarMedicos();
-    }
-    static public function ctrListarEstudios()
-    {
-        return ModeloCitas::mdlListarEstudios();
+        return ModeloCitas::mdlListar($tabla, $item, $valor);
     }
 
-    // Citas
-    static public function ctrListarCitas()
+    static public function Insertar($tabla, $datos)
     {
-        return ModeloCitas::mdlListarCitas();
+        return ModeloCitas::mdlIngresar($tabla, $datos);
+    }
+
+    static public function Actualizar($tabla, $datos)
+    {
+        return ModeloCitas::mdlActualizar($tabla, $datos);
+    }
+
+    static public function Eliminar($id)
+    {
+        return ModeloCitas::mdlEliminar($id);
+    }
+
+    static public function Editar($id)
+    {
+        return ModeloCitas::mdObtener($id);
     }
 }
 
 $objeto = new ControladorCitas();
 
-if ($_POST['metodo'] == 'listar_medicos') {
-    echo json_encode($objeto::ctrListarMedicos());
+if (isset($_POST['metodo']) && $_POST['metodo'] == 'listar') {
+    echo json_encode($objeto::Listar('citas', '', ''));
 }
 
-if ($_POST['metodo'] == 'listar_estudios') {
-    echo json_encode($objeto::ctrListarEstudios());
-}
-
-
-if ($_POST['metodo'] == 'listar_citas') {
-    $data = $objeto::ctrListarCitas();
-    $results = [];
-    $list = [];
-    if (count($data) > 0) {
-        foreach ($data as $value) {
-            $list[] = [
-                "fecha" => $value['fechaAsignada'],
-                "hora" => $value['horaCita'],
-                "idPaciente" => $value['idPaciente'],
-                "paciente" => $value['paciente'],
-                "medico" => $value['medico'],
-                "estudio" => $value['estudio'],
-                "estado" => $value['estadoCita'],
-                "op" => "
-                    <button type='button' class='btn btn-primary btn-sm' title='Ver Cita' '>
-                        <i class='far fa-eye'></i>
-                    </button>
-                    <button type='button' class='btn btn-warning btn-sm' title='Editar Cita'>
-                        <i class='fas fa-edit text-white'></i>
-                    </button>
-                    <button type='button' class='btn btn-danger btn-sm'  title='Eliminar Cita' >
-                        <i class='fas fa-trash-alt'></i>
-                    </button>"
-            ];
-        }
-        $results = array(
-            "sEcho" => 1,
-            "iTotalRecords" => count($list),
-            "iTotalDisplayRecords" => count($list),
-            "aaData" => $list
-        );
-    } else {
-        $results = array(
-            "sEcho" => 0,
-            "iTotalRecords" => count($list),
-            "iTotalDisplayRecords" => count($list),
-            "aaData" => $list
-        );
+if(isset($_POST['metodo']) && $_POST['metodo'] == 'insertar'){
+    parse_str($_POST['data'], $arrDatos);
+    if($objeto::Insertar('citas', $arrDatos)){
+        echo json_encode(["respuesta"=> true]);
+    }else{
+        echo json_encode(["respuesta"=> false]);
     }
-
-    echo json_encode($results);
 }
+
+if (isset($_POST['metodo']) && $_POST['metodo'] == 'actualizar') {
+    parse_str($_POST['data'], $arrDatos);
+    if ($objeto::Actualizar('citas', $arrDatos)) {
+        echo json_encode(["respuesta" => true]);
+    } else {
+        echo json_encode(["respuesta" => false]);
+    }
+}
+
+if (isset($_POST['metodo']) && $_POST['metodo'] == 'eliminar') {
+    $delete = $_POST['id'];
+    echo json_encode($objeto::Eliminar($delete));
+}
+
+if (isset($_POST['metodo']) && $_POST['metodo'] == 'editar') {
+    $id = $_POST['id'];
+    $registro = $objeto::Editar($id);
+    echo json_encode($registro);
+}
+?>

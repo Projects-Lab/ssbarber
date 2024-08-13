@@ -38,7 +38,9 @@
 
     </section>
     <!-- /.content -->
-</div><!-- Modal para agregar empleado -->
+</div>
+
+<!-- Modal para agregar empleado -->
 <div class="modal fade" id="modal_agregar_empleado" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -61,6 +63,7 @@
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                 </form>
             </div>
         </div>
@@ -91,6 +94,7 @@
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Actualizar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                 </form>
             </div>
         </div>

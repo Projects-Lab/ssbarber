@@ -1,3 +1,21 @@
+// Cargar cargos en el select
+function cargarCargos() {
+    $.ajax({
+        type: "POST",
+        url: "controladores/empleado.controlador.php",
+        data: { metodo: "listar_cargos" },
+        dataType: "json",
+        success: function (response) {
+            let opciones = '<option value="" disabled selected>Seleccionar Cargo</option>';
+            response.forEach(function (cargo) {
+                opciones += `<option value="${cargo.id}">${cargo.nombre}</option>`;
+            });
+            $('#cargoEmpleado').html(opciones);
+        }
+    });
+}
+
+
 // Registrar empleado
 function registrarEmpleado() {
     $.ajax({
@@ -5,7 +23,7 @@ function registrarEmpleado() {
         url: "controladores/empleado.controlador.php",
         data: ({
             metodo: "agregar_empleado",
-            data: $("#frmAgregarEmpleado").serialize()
+            data: $("#form_agregar_empleado").serialize()
         }),
         dataType: 'JSON',
         beforeSend: function () { $('body').LoadingOverlay("show"); },
@@ -23,7 +41,7 @@ function registrarEmpleado() {
                 }).then((result) => {
                     if (result.isConfirmed) {
                         Swal.close();
-                        $("#frmAgregarEmpleado")[0].reset();
+                        $("#form_agregar_empleado")[0].reset();
                         $('#tbListarEmpleados').DataTable().ajax.reload(null, false);
                     }
                 })
@@ -199,4 +217,7 @@ function eliminarEmpleado(id) {
 
 document.addEventListener("DOMContentLoaded", () => {
     listarEmpleados();
+    cargarCargos();  // Llamamos a la función para cargar los cargos cuando se cargue la página
+    $('#form_agregar_empleado').on('submit', registrarEmpleado);  // Registrar empleado al enviar el formulario
+
 });

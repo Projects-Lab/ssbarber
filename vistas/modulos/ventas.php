@@ -25,7 +25,7 @@
                                 <thead>
                                     <tr>
                                         <th>Fecha</th>
-                                        <th>Consecutivo</th>
+                                        <!-- <th>Consecutivo</th> -->
                                         <th>ID Cliente</th>
                                         <th>Cliente</th>
                                         <th>Producto</th>
@@ -61,8 +61,8 @@
                         <input type="date" class="form-control" id="fechaVenta" name="fechaVenta" required>
                     </div>
                     <div class="form-group">
-                        <label for="consecutivoVenta">Consecutivo Venta</label>
-                        <input type="text" class="form-control" id="consecutivoVenta" name="consecutivoVenta" required>
+                        <!-- <label for="consecutivoVenta">Consecutivo Venta</label> -->
+                        <input type="hidden" class="form-control" id="consecutivoVenta" name="consecutivoVenta" required>
                     </div>
                     <div class="form-group">
                         <label for="clienteVenta">Cliente (Cédula)</label>
@@ -106,8 +106,8 @@
                     <input type="text" class="form-control" id="fechaVenta_ver" disabled>
                 </div>
                 <div class="form-group">
-                    <label>Consecutivo Venta</label>
-                    <input type="text" class="form-control" id="consecutivoVenta_ver" disabled>
+                    <!-- <label>Consecutivo Venta</label> -->
+                    <input type="hidden" class="form-control" id="consecutivoVenta_ver" disabled>
                 </div>
                 <div class="form-group">
                     <label>Cliente (Cédula)</label>
@@ -147,8 +147,8 @@
                         <input type="date" class="form-control" id="fechaVenta_editar" name="fechaVenta_editar" required>
                     </div>
                     <div class="form-group">
-                        <label for="consecutivoVenta_editar">Consecutivo Venta</label>
-                        <input type="text" class="form-control" id="consecutivoVenta_editar" name="consecutivoVenta_editar" required>
+                        <!-- <label for="consecutivoVenta_editar">Consecutivo Venta</label> -->
+                        <input type="hidden" class="form-control" id="consecutivoVenta_editar" name="consecutivoVenta_editar" required>
                     </div>
                     <div class="form-group">
                         <label for="clienteVenta_editar">Cliente (Cédula)</label>

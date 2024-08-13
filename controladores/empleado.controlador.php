@@ -10,6 +10,10 @@ class ControladorEmpleados
         return ModeloEmpleados::mdlAgregarEmpleado($datos);
     }
 
+    public static function ctrListarCargos() {
+        return ModeloEmpleados::mdlListarCargos();
+    }
+
     // Consultar empleado
     public static function ctrConsultarEmpleado($id_empleado)
     {
@@ -42,6 +46,12 @@ class ControladorEmpleados
 }
 
 $objeto = new ControladorEmpleados();
+
+
+if ($_POST['metodo'] == 'listar_cargos') {
+    $cargos = $objeto::ctrListarCargos();
+    echo json_encode($cargos);
+}
 
 // Procesar las solicitudes AJAX
 if ($_POST['metodo'] == 'agregar_empleado') {

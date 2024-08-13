@@ -25,10 +25,9 @@
                             <tr>
                                 <th>Fecha</th>
                                 <th>Hora</th>
-                                <th>ID</th>
                                 <th>Cliente</th>
+                                <th>Encargado</th>
                                 <th>Servicio</th>
-                                <th>Empleado Encargado</th>
                                 <th>Estado Cita</th>
                                 <th>Acciones</th>
                             </tr>
@@ -56,7 +55,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="frmAgregarPaciente" onsubmit="return registrarPaciente()" method="post" autocomplete="off">
+                <form id="frmAgregarCita" onsubmit="return registrarCita()" method="post" autocomplete="off">
 
                     <h4>Agendar Nueva Cita</h4>
                     <hr>
@@ -68,29 +67,29 @@
                         </div>
                         <div class="col-md-3">
                             <label for="hora_cita">Hora de la Cita:</label>
-                            <input type="time" class="form-control" id="hora_cita" name="hora_cita" required>
+                            <input type="text" class="form-control" id="hora_cita" name="hora_cita" required>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-4 mt-3">
-                            <label for="id_paciente">ID Cliente:</label>
+                            <label for="id_cliente">ID Cliente:</label>
                             <div class="input-group mb-3">
-                                <input type="number" class="form-control" id="id_paciente" name="id_paciente" required>
+                                <input type="number" class="form-control" id="id_cliente" name="id_cliente" required>
                                 <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary" type="button" id="buscarPaciente"><i class="fa fa-plus" aria-hidden="true"></i></button>
+                                    <button class="btn btn-outline-secondary" type="button" id="buscarCliente"><i class="fa fa-plus" aria-hidden="true"></i></button>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-4 mt-3">
-                            <label for="id_paciente">Nombres:</label>
+                            <label for="id_cliente">Nombres:</label>
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control" id="nombre_paciente" name="nombre_paciente" required>
+                                <input type="text" class="form-control" id="nombre_cliente" name="nombre_cliente" disabled>
                             </div>
                         </div>
                         <div class="col-md-4 mt-3">
-                            <label for="id_paciente">Apellidos:</label>
+                            <label for="id_cliente">Apellidos:</label>
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control" id="nombre_paciente" name="nombre_paciente" required>
+                                <input type="text" class="form-control" id="apellidos_cliente" name="apellidos_cliente" disabled>
                             </div>
                         </div>
 
@@ -100,19 +99,11 @@
                         <div class="col-md-6">
                             <label for="estudio">Servicio:</label>
                             <select class="form-control" id="estudio" name="estudio" required>
-                            <option value="O">Barberia</option>
-                            <option value="O">Corte de Cabello</option>
-                            <option value="O">Depilacion</option>
-                            <option value="O">Pedicure</option>
                             </select>
                         </div>
                         <div class="col-md-6">
                             <label for="empleado">Empleado Encargado:</label>
-                            <select class="form-control" id="empleado" name="medico" required>
-                            <option value="O">Jorge Uribe</option>
-                            <option value="O">Critobal Silva</option>
-                            <option value="O">Luis Lopez</option>
-                            <option value="O">Monica Chivatá</option>
+                            <select class="form-control" id="empleado" name="empleado" required>
                             </select>
                         </div>
 

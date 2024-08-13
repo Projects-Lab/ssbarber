@@ -1,3 +1,36 @@
+// Cargar productos en el select
+function cargarProductos() {
+    $.ajax({
+        type: "POST",
+        url: "controladores/ventas.controlador.php",
+        data: { metodo: "listar_productos" },
+        dataType: "json",
+        success: function (response) {
+            let opciones = '<option value="" disabled selected>Seleccionar Productos</option>';
+            response.forEach(function (productos) {
+                opciones += `<option value="${productos.id}">${productos.nombre}</option>`;
+            });
+            $('#productoVenta').html(opciones);
+        }
+    });
+}
+
+// Cargar productos en el select
+function cargarClientes() {
+    $.ajax({
+        type: "POST",
+        url: "controladores/ventas.controlador.php",
+        data: { metodo: "listar_clientes" },
+        dataType: "json",
+        success: function (response) {
+            let opciones = '<option value="" disabled selected>Seleccionar Clientes</option>';
+            response.forEach(function (clientes) {
+                opciones += `<option value="${clientes.id}">${clientes.numero_identificacion} - ${clientes.nombre_completo} </option>`;
+            });
+            $('#clienteVenta').html(opciones);
+        }
+    });
+}
 
 function ListarVentas() {
     $('#tbListarVentas').dataTable({
@@ -20,7 +53,7 @@ function ListarVentas() {
         },
         "aoColumns": [
             { mData: 'fecha' },
-            { mData: 'consecutivo' },
+            // { mData: 'consecutivo' },
             { mData: 'cedula_cliente' },
             { mData: 'nombres_cliente' },
             { mData: 'producto_nombre' },
@@ -90,7 +123,7 @@ function VerVenta(id) {
             var venta = JSON.parse(data);
 
             document.getElementById("fechaVenta_ver").value = venta.fecha;
-            document.getElementById("consecutivoVenta_ver").value = venta.consecutivo_venta;
+            // document.getElementById("consecutivoVenta_ver").value = venta.consecutivo_venta;
             document.getElementById("clienteVenta_ver").value = venta.numero_identificacion;
             document.getElementById("productoVenta_ver").value = venta.producto_nombre;
             document.getElementById("valorVenta_ver").value = venta.valor;
@@ -116,7 +149,7 @@ function EditarVenta(id) {
 
             document.getElementById("id_venta_editar").value = venta.id;
             document.getElementById("fechaVenta_editar").value = venta.fecha;
-            document.getElementById("consecutivoVenta_editar").value = venta.consecutivo_venta;
+            // document.getElementById("consecutivoVenta_editar").value = venta.consecutivo_venta;
             document.getElementById("clienteVenta_editar").value = venta.numero_identificacion;
             // document.getElementById("nombresCliente_editar").value = venta.nombres_cliente;
             document.getElementById("productoVenta_editar").value = venta.producto_nombre;
@@ -206,4 +239,10 @@ function EliminarVenta(id) {
 
 document.addEventListener("DOMContentLoaded", () => {
     ListarVentas();
+    cargarProductos();  // Llamamos a la función para cargar los cargos cuando se cargue la página
+    $('#frmAgregarVenta').on('submit', registrarVenta);  // Registrar empleado al enviar el formulario
+
+    cargarClientes();  // Llamamos a la función para cargar los cargos cuando se cargue la página
+    $('#frmAgregarVenta').on('submit', registrarVenta);  // Registrar empleado al enviar el formulario
+
 });

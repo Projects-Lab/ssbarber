@@ -37,9 +37,25 @@ class ControladorVentas {
     public static function ctrEliminarVenta($id) {
         return ModeloVentas::mdlEliminarVenta($id);
     }
+    public static function ctrListarProductos() {
+        return ModeloVentas::mdlListarProductos();
+    }
+    public static function ctrListarClientes() {
+        return ModeloVentas::mdlListarClientes();
+    }
 }
 
 $objeto = new ControladorVentas();
+
+if ($_POST['metodo'] == 'listar_productos') {
+    $productos = $objeto::ctrListarProductos();
+    echo json_encode($productos);
+}
+
+if ($_POST['metodo'] == 'listar_clientes') {
+    $clientes = $objeto::ctrListarClientes();
+    echo json_encode($clientes);
+}
 
 if ($_POST['metodo'] == 'validar_existencia') {
     $numero_venta = $_POST['numero_venta'];

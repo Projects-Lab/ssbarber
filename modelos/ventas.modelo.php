@@ -13,8 +13,19 @@ class ModeloVentas
         return $stmt->rowCount() > 0;
     }
 
-
+    public static function mdlListarProductos() {
+        $stmt = Conexion::conectar()->prepare("SELECT * FROM productos");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
     
+    public static function mdlListarClientes() {
+        $stmt = Conexion::conectar()->prepare("SELECT   c.numero_identificacion,                                                    
+                                                        CONCAT(c.primer_nombre, ' ', c.segundo_nombre, ' ', c.primer_apellido, ' ', c.segundo_apellido) AS nombre_completo
+                                                        FROM clientes c");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     public static function mdlConsultarVenta($id)
     {
@@ -53,30 +64,28 @@ INNER JOIN productos p ON v.id_producto = p.id WHERE v.id = :id");
 
     public static function mdlAgregarVenta($datos)
     {
-        $stmt = Conexion::conectar()->prepare("INSERT INTO ventas (fecha, consecutivo, cedula_cliente, nombres_cliente, apellidos_cliente, producto_nombre, producto_codigo, producto_valor) VALUES (:fecha, :consecutivo, :cedula_cliente, :nombres_cliente, :apellidos_cliente, :producto_nombre, :producto_codigo, :producto_valor)");
-        $stmt->bindParam(':fecha', $datos['fecha'], PDO::PARAM_STR);
-        $stmt->bindParam(':consecutivo', $datos['consecutivo'], PDO::PARAM_STR);
-        $stmt->bindParam(':cedula_cliente', $datos['cedula_cliente'], PDO::PARAM_STR);
-        $stmt->bindParam(':nombres_cliente', $datos['nombres_cliente'], PDO::PARAM_STR);
-        $stmt->bindParam(':apellidos_cliente', $datos['apellidos_cliente'], PDO::PARAM_STR);
-        $stmt->bindParam(':producto_nombre', $datos['producto_nombre'], PDO::PARAM_STR);
-        $stmt->bindParam(':producto_codigo', $datos['producto_codigo'], PDO::PARAM_STR);
-        $stmt->bindParam(':producto_valor', $datos['producto_valor'], PDO::PARAM_STR);
+        $stmt = Conexion::conectar()->prepare(
+            "INSERT INTO ventas (fecha, consecutivo_venta, id_cliente, id_producto, valor)
+
+        VALUES (:fecha, :consecutivo_venta, :id_cliente, :id_producto, :valor)");
+        
+        $stmt->bindParam(':fecha', $datos['fechaVenta'], PDO::PARAM_STR);
+        $stmt->bindParam(':consecutivo_venta', $datos['consecutivoVenta'], PDO::PARAM_STR);
+        $stmt->bindParam(':id_cliente', $datos['clienteVenta'], PDO::PARAM_STR);
+        $stmt->bindParam(':id_producto', $datos['productoVenta'], PDO::PARAM_STR);
+        $stmt->bindParam(':valor', $datos['valorVenta'], PDO::PARAM_STR);
         return $stmt->execute();
     }
 
     public static function mdlActualizarVenta($datos)
     {
-        $stmt = Conexion::conectar()->prepare("UPDATE ventas SET fecha = :fecha, consecutivo = :consecutivo, cedula_cliente = :cedula_cliente, nombres_cliente = :nombres_cliente, apellidos_cliente = :apellidos_cliente, producto_nombre = :producto_nombre, producto_codigo = :producto_codigo, producto_valor = :producto_valor WHERE id = :id");
+        $stmt = Conexion::conectar()->prepare("UPDATE ventas SET fecha = :fecha, consecutivo_venta = :consecutivo_venta, id_cliente = :cedula_cliente, id_producto = :id_producto WHERE id = :id");
         $stmt->bindParam(':id', $datos['id'], PDO::PARAM_INT);
-        $stmt->bindParam(':fecha', $datos['fecha'], PDO::PARAM_STR);
-        $stmt->bindParam(':consecutivo', $datos['consecutivo'], PDO::PARAM_STR);
-        $stmt->bindParam(':cedula_cliente', $datos['cedula_cliente'], PDO::PARAM_STR);
-        $stmt->bindParam(':nombres_cliente', $datos['nombres_cliente'], PDO::PARAM_STR);
-        $stmt->bindParam(':apellidos_cliente', $datos['apellidos_cliente'], PDO::PARAM_STR);
-        $stmt->bindParam(':producto_nombre', $datos['producto_nombre'], PDO::PARAM_STR);
-        $stmt->bindParam(':producto_codigo', $datos['producto_codigo'], PDO::PARAM_STR);
-        $stmt->bindParam(':producto_valor', $datos['producto_valor'], PDO::PARAM_STR);
+        $stmt->bindParam(':fecha', $datos['fechaVenta_editar'], PDO::PARAM_STR);
+        $stmt->bindParam(':consecutivo_venta', $datos['consecutivoVenta_editar'], PDO::PARAM_STR);
+        $stmt->bindParam(':id_cliente', $datos['clienteVenta_editar'], PDO::PARAM_STR);
+        $stmt->bindParam(':id_producto', $datos['productoVenta_editar'], PDO::PARAM_STR);
+        $stmt->bindParam(':valor', $datos['valorVenta_editar'], PDO::PARAM_STR);
         return $stmt->execute();
     }
 

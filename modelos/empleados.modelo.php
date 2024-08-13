@@ -4,6 +4,13 @@ require_once "conexion.php";
 
 class ModeloEmpleados
 {
+
+    public static function mdlListarCargos() {
+        $stmt = Conexion::conectar()->prepare("SELECT id, nombre FROM cargo");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
     // Método para agregar un empleado
     public static function mdlAgregarEmpleado($datos)
     {
