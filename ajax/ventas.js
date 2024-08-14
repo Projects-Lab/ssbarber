@@ -133,6 +133,7 @@ function VerVenta(id) {
     });
 }
 
+
 function EditarVenta(id) {
     $.ajax({
         type: "POST",
@@ -237,6 +238,55 @@ function EliminarVenta(id) {
     });
 }
 
+
+function imprimir(id) {
+    $.ajax({
+      type: "POST",
+     url: "controladores/ventas.controlador.php",
+      data: {
+           metodo: "imprimir",
+           id: id
+      },
+      dataType: "json",
+       success: function (respuesta) {
+          if(respuesta){
+           console.log('respuesta')
+
+          }
+         
+
+     }
+    });
+
+  
+   if(id){
+       let timerInterval
+       Swal.fire({
+         title: 'Generando el PDF',
+         html: 'Por favor espere: <b></b> milliseconds.',
+         timer: 1000,
+         timerProgressBar: true,
+         didOpen: () => {
+           Swal.showLoading()
+           const b = Swal.getHtmlContainer().querySelector('b')
+           timerInterval = setInterval(() => {
+             b.textContent = Swal.getTimerLeft()
+           }, 100)
+         },
+         willClose: () => {
+           clearInterval(timerInterval)
+         }
+       }).then((result) => {
+         if (result) {
+          window.open('./pdf_ventas.php');
+        
+          
+           
+         }
+       })
+   }
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     ListarVentas();
     cargarProductos();  // Llamamos a la función para cargar los cargos cuando se cargue la página
@@ -245,4 +295,6 @@ document.addEventListener("DOMContentLoaded", () => {
     cargarClientes();  // Llamamos a la función para cargar los cargos cuando se cargue la página
     $('#frmAgregarVenta').on('submit', registrarVenta);  // Registrar empleado al enviar el formulario
 
+
+    imprimir()
 });

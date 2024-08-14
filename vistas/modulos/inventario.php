@@ -57,23 +57,23 @@
                 <form id="formAgregarProducto">
                     <div class="form-group">
                         <label for="nombreProducto">Nombre</label>
-                        <input type="text" class="form-control" id="nombreProducto" placeholder="Nombre del producto" required>
+                        <input type="text" class="form-control" name="nombreProducto" id="nombreProducto" placeholder="Nombre del producto" required>
                     </div>
                     <div class="form-group">
                         <label for="codigoProducto">Código</label>
-                        <input type="text" class="form-control" id="codigoProducto" placeholder="Código del producto" required>
+                        <input type="text" class="form-control" name="codigoProducto" id="codigoProducto" placeholder="Código del producto" required>
                     </div>
                     <div class="form-group">
                         <label for="categoriaProducto">Categoría</label>
-                        <input type="text" class="form-control" id="categoriaProducto" placeholder="Categoría del producto" required>
+                        <input type="text" class="form-control" name="categoriaProducto" id="categoriaProducto" placeholder="Categoría del producto" required>
                     </div>
                     <div class="form-group">
                         <label for="stockProducto">Stock</label>
-                        <input type="number" class="form-control" id="stockProducto" placeholder="Cantidad en stock" required>
+                        <input type="number" class="form-control" name="stockProducto" id="stockProducto" placeholder="Cantidad en stock" required>
                     </div>
                     <div class="form-group">
                         <label for="precioProducto">Precio</label>
-                        <input type="number" class="form-control" id="precioProducto" placeholder="Precio del producto" step="0.01" required>
+                        <input type="number" class="form-control" name="stockProducto" id="precioProducto" placeholder="Precio del producto" step="0.01" required>
                     </div>
                     <button type="submit" class="btn btn-primary">Guardar producto</button>
                 </form>
@@ -133,7 +133,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="formEditarProducto">
+                <form id="formEditarProducto" method="post" onsubmit="return ActualizarProducto()" >
                 <input type="text" class="form-control" id="id_producto_editar" disabled>
 
                     <div class="form-group">

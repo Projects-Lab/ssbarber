@@ -51,11 +51,11 @@ class ModeloProductos
                         stock=:stock, precio=:precio 
                 WHERE id = :id";
         $stmt = Conexion::conectar()->prepare($sql);
-        $stmt->bindParam(":nombre", $datos['nombreProducto'], PDO::PARAM_STR);
-        $stmt->bindParam(":codigo", $datos['codigoProducto'], PDO::PARAM_STR);
-        $stmt->bindParam(":categoria", $datos['categoriaProducto'], PDO::PARAM_STR);
-        $stmt->bindParam(":stock", $datos['stockProducto'], PDO::PARAM_INT);
-        $stmt->bindParam(":precio", $datos['precioProducto'], PDO::PARAM_STR);
+        $stmt->bindParam(":nombre", $datos['editarNombreProducto'], PDO::PARAM_STR);
+        $stmt->bindParam(":codigo", $datos['editarCodigoProducto'], PDO::PARAM_STR);
+        $stmt->bindParam(":categoria", $datos['editarCategoriaProducto'], PDO::PARAM_STR);
+        $stmt->bindParam(":stock", $datos['editarStockProducto'], PDO::PARAM_INT);
+        $stmt->bindParam(":precio", $datos['editarPrecioProducto'], PDO::PARAM_STR);
         $stmt->bindParam(":id", $datos['idProductoEditar'], PDO::PARAM_INT);
 
         if ($stmt->execute()) {
@@ -89,11 +89,11 @@ class ModeloProductos
         $stmt = null;
     }
 
-    static public function mdlValidarProducto($codigo)
+    static public function mdlValidarProducto($codigo_producto)
     {
         $sql = "SELECT * FROM productos WHERE codigo = :codigoProducto";
         $stmt = Conexion::conectar()->prepare($sql);
-        $stmt->bindParam(":codigoProducto", $codigo, PDO::PARAM_STR);
+        $stmt->bindParam(":codigoProducto", $codigo_producto, PDO::PARAM_STR);
         $stmt->execute();
 
         if ($stmt->rowCount() > 0) {
