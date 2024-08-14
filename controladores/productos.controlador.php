@@ -42,8 +42,8 @@ class ControladorProductos
 
 $objeto = new ControladorProductos();
 
-if ($_POST['metodo'] == 'validar_existencia') {
-    $codigo = $_POST['codigo'];
+if ($_POST['metodo'] == 'validar_existencia_producto') {
+    $codigo = strtoupper($_POST['codigo']);
     if ($objeto::ctrValidarProducto($codigo)) {
         echo json_encode(["respuesta" => true]);
     } else {

@@ -10,72 +10,78 @@
         </div>
     </section>
     <section class="content">
-    <div class="card">
-        <div class="card-header bg-gradient-info">
-            <h3 class="card-title text-uppercase">Productos</h3>
-        </div>
-        <div class="card-body">
-            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalAgregarProducto">
-                <i class="fas fa-plus-circle"></i> Agregar producto
-            </button>
-            <div class="container-fluid mt-3">
-                <div class="row">
-                    <div class="col-12">
-                        <table id="tbProductos"
-                            class="table table-bordered table-striped table-hover dt-responsive table-sm"
-                            style="width: 100%;">
-                            <thead>
-                                <tr class="active">
-                                    <th>Nombre</th>
-                                    <th>Código</th>
-                                    <th>Categoría</th>
-                                    <th>Stock</th>
-                                    <th>Precio</th>
-                                    <th>Acciones</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+        <div class="card">
+            <div class="card-header bg-gradient-primary">
+                <h3 class="card-title text-uppercase">Productos</h3>
+            </div>
+            <div class="card-body">
+                <div class="container-fluid mt-3">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalAgregarProducto">
+                                <i class="fas fa-plus-circle"></i> Agregar producto
+                            </button>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table id="tbProductos"
+                                class="table table-bordered table-striped table-hover dt-responsive table-sm"
+                                style="width: 100%;">
+                                <thead>
+                                    <tr class="active">
+                                        <th>Nombre</th>
+                                        <th>Código</th>
+                                        <th>Categoría</th>
+                                        <th>Stock</th>
+                                        <th>Precio</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 </div>
-<div class="modal fade" id="modalAgregarProducto" tabindex="-1" role="dialog" aria-labelledby="modalAgregarProductoLabel" aria-hidden="true">
+<div class="modal fade" id="modalAgregarProducto" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="modalAgregarProductoLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header bg-gradient-info">
+            <div class="modal-header bg-gradient-primary">
                 <h5 class="modal-title" id="modalAgregarProductoLabel">Agregar Producto</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form id="formAgregarProducto">
+                <form id="formAgregarProducto" method="post" onsubmit=" return registrarProducto()">
                     <div class="form-group">
                         <label for="nombreProducto">Nombre</label>
-                        <input type="text" class="form-control" id="nombreProducto" placeholder="Nombre del producto" required>
+                        <input type="text" class="form-control text-uppercase" name="nombreProducto" id="nombreProducto" placeholder="Nombre del producto" required>
                     </div>
                     <div class="form-group">
                         <label for="codigoProducto">Código</label>
-                        <input type="text" class="form-control" id="codigoProducto" placeholder="Código del producto" required>
+                        <input type="text" class="form-control text-uppercase" name="codigoProducto" id="codigoProducto" placeholder="Código del producto" required>
                     </div>
                     <div class="form-group">
                         <label for="categoriaProducto">Categoría</label>
-                        <input type="text" class="form-control" id="categoriaProducto" placeholder="Categoría del producto" required>
+                        <select class="form-control" name="categoriaProducto" id="categoriaProducto"></select>
                     </div>
                     <div class="form-group">
                         <label for="stockProducto">Stock</label>
-                        <input type="number" class="form-control" id="stockProducto" placeholder="Cantidad en stock" required>
+                        <input type="number" class="form-control" name="stockProducto" id="stockProducto" placeholder="Cantidad en stock" required>
                     </div>
                     <div class="form-group">
                         <label for="precioProducto">Precio</label>
-                        <input type="number" class="form-control" id="precioProducto" placeholder="Precio del producto" step="0.01" required>
+                        <input type="number" class="form-control" name="precioProducto" id="precioProducto" placeholder="Precio del producto" step="0.01" required>
                     </div>
-                    <button type="submit" class="btn btn-primary">Guardar producto</button>
+                    <hr>
+                    <button type="submit" class="btn btn-primary float-right" id="btnGuardar">Guardar producto</button>
                 </form>
             </div>
         </div>
@@ -94,7 +100,7 @@
             </div>
             <div class="modal-body">
                 <form>
-                <input type="text" class="form-control" id="idProducto_ver" disabled>
+                    <input type="text" class="form-control" id="idProducto_ver" disabled>
 
                     <div class="form-group">
                         <label for="verNombreProducto">Nombre</label>
@@ -134,7 +140,7 @@
             </div>
             <div class="modal-body">
                 <form id="formEditarProducto">
-                <input type="text" class="form-control" id="id_producto_editar" disabled>
+                    <input type="text" class="form-control" id="id_producto_editar" disabled>
 
                     <div class="form-group">
                         <label for="editarNombreProducto">Nombre</label>
