@@ -27,9 +27,25 @@ class ControladorCitas{
     {
         return ModeloCitas::mdObtener($id);
     }
+
+    static public function Imprimir($id)
+    {
+        return ModeloCitas::mdObtener($id);
+    }
 }
 
 $objeto = new ControladorCitas();
+
+if (isset($_POST['metodo']) && $_POST['metodo'] == 'imprimir') {
+    $id = $_POST['id'];
+    $registro = $objeto::Imprimir($id);
+    $jsonData = json_encode($registro);
+    
+    // Guardar los datos en un archivo JSON
+    $jsonDatos = json_encode($registro);
+    file_put_contents('citasdatos.json', $jsonDatos);
+}
+
 
 if (isset($_POST['metodo']) && $_POST['metodo'] == 'listar') {
     echo json_encode($objeto::Listar('citas', '', ''));

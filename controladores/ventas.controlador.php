@@ -1,46 +1,61 @@
 <?php
 
 require_once '../modelos/ventas.modelo.php';
-class ControladorVentas {
+class ControladorVentas
+{
 
     // Método para validar existencia de una venta
-    public static function ctrValidarVenta($numero_venta) {
+    public static function ctrValidarVenta($numero_venta)
+    {
         return ModeloVentas::mdlValidarVenta($numero_venta);
     }
 
+    static public function Imprimir($id)
+    {
+        return ModeloVentas::mdlConsultarVenta($id);
+    }
+
     // Método para consultar una venta
-    public static function ctrConsultarVenta($id_venta) {
+    public static function ctrConsultarVenta($id_venta)
+    {
         return ModeloVentas::mdlConsultarVenta($id_venta);
     }
 
     // Método para obtener datos para editar una venta
-    public static function ctrEditarVenta($id_venta) {
+    public static function ctrEditarVenta($id_venta)
+    {
         return ModeloVentas::mdlEditarVenta($id_venta);
     }
 
     // Método para agregar una nueva venta
-    public static function ctrAgregarVenta($datos) {
+    public static function ctrAgregarVenta($datos)
+    {
         return ModeloVentas::mdlAgregarVenta($datos);
     }
 
     // Método para actualizar una venta existente
-    public static function ctrActualizarVenta($datos) {
+    public static function ctrActualizarVenta($datos)
+    {
         return ModeloVentas::mdlActualizarVenta($datos);
     }
 
     // Método para listar todas las ventas
-    public static function ctrListarVentas() {
+    public static function ctrListarVentas()
+    {
         return ModeloVentas::mdlListarVentas();
     }
 
     // Método para eliminar una venta
-    public static function ctrEliminarVenta($id) {
+    public static function ctrEliminarVenta($id)
+    {
         return ModeloVentas::mdlEliminarVenta($id);
     }
-    public static function ctrListarProductos() {
+    public static function ctrListarProductos()
+    {
         return ModeloVentas::mdlListarProductos();
     }
-    public static function ctrListarClientes() {
+    public static function ctrListarClientes()
+    {
         return ModeloVentas::mdlListarClientes();
     }
 }
@@ -106,11 +121,14 @@ if ($_POST['metodo'] == 'listar_ventas') {
                 "cedula_cliente" => $value['numero_identificacion'],
                 "nombres_cliente" => $value['primer_nombre'] . ' ' . $value['segundo_nombre'] . ' ' . $value['primer_apellido'] . ' ' . $value['segundo_apellido'],
                 "producto_nombre" => $value['producto_nombre'],
-                "valor_venta" => $value['valor'],              
+                "valor_venta" => $value['valor'],
 
                 "op" => "
                     <button type='button' class='btn btn-primary btn-sm' title='Ver venta' onclick='VerVenta({$value['id']})'>
                         <i class='far fa-eye'></i>
+                    </button>
+                    <button type='button' class='btn btn-info btn-sm' title='Imprimir' onclick='imprimir({$value['id']})'>
+                        <i class='fas fa-print'></i>
                     </button>
                     <button type='button' class='btn btn-warning btn-sm' hidden title='Editar venta' onclick='EditarVenta({$value['id']})'>
                         <i class='fas fa-edit text-white'></i>
@@ -138,6 +156,17 @@ if ($_POST['metodo'] == 'listar_ventas') {
     echo json_encode($results);
 }
 
+if (isset($_POST['metodo']) && $_POST['metodo'] == 'imprimir') {
+    $id = $_POST['id'];
+    $registro = $objeto::Imprimir($id); // Cambiado a $registro en lugar de $registros
+    $jsonData = json_encode($registro);
+    
+    // Guardar los datos en un archivo JSON
+    $jsonDatos = json_encode($registro);
+    file_put_contents('ventasdatos.json', $jsonDatos);
+}
+
+
 if ($_POST['metodo'] == 'eliminar_venta') {
     $venta = $_POST['id'];
     if ($objeto::ctrEliminarVenta($venta)) {
@@ -146,4 +175,3 @@ if ($_POST['metodo'] == 'eliminar_venta') {
         echo json_encode(["respuesta" => false]);
     }
 }
-?>

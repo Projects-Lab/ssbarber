@@ -19,10 +19,11 @@ function listarCitas() {
                               <td>${element.estado}</td>
                               <td>
                                   <div class="btn-group" role="group" aria-label="Basic example">
-                                      <button class="btn btn-secondary btn-sm"  onclick='editarCita(${element.id})'>
+                                      <button class="btn btn-secondary btn-sm"  title='Editar' onclick='editarCita(${element.id})'>
                                       <i class="fas fa-edit"></i>
                                     </button>
-                                    <button class="btn btn-danger btn-sm" onclick='eliminarCita(${element.id})' > <i class="fas fa-trash"></i></button> 
+                                    <button class="btn btn-danger btn-sm" title='Eliminar' onclick='eliminarCita(${element.id})' > <i class="fas fa-trash"></i></button> 
+                                    <button class="btn btn-info btn-sm" title='Imprimir' onclick='imprimir(${element.id})' > <i class='fas fa-print'></i></button> 
                                   </div>
                               </td> 
                               </tr>`;
@@ -175,6 +176,56 @@ function eliminarCita(id) {
   })
 }
 
+
+function imprimir(id) {
+  $.ajax({
+    type: "POST",
+   url: "controladores/citas.controlador.php",
+    data: {
+         metodo: "imprimir",
+         id: id
+    },
+    dataType: "json",
+     success: function (respuesta) {
+        if(respuesta){
+         console.log('respuesta')
+
+        }
+       
+
+   }
+  });
+
+
+ if(id){
+     let timerInterval
+     Swal.fire({
+       title: 'Generando el PDF',
+       html: 'Por favor espere: <b></b> milliseconds.',
+       timer: 1000,
+       timerProgressBar: true,
+       didOpen: () => {
+         Swal.showLoading()
+         const b = Swal.getHtmlContainer().querySelector('b')
+         timerInterval = setInterval(() => {
+           b.textContent = Swal.getTimerLeft()
+         }, 100)
+       },
+       willClose: () => {
+         clearInterval(timerInterval)
+       }
+     }).then((result) => {
+       if (result) {
+        window.open('./pdf_citas.php');
+      
+        
+         
+       }
+     })
+ }
+}
+
 $(document).ready(function () {
   listarCitas();
+  imprimir();
 });

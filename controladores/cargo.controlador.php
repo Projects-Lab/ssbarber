@@ -48,6 +48,7 @@ if(isset($_POST['metodo']) && $_POST['metodo'] == 'insertar'){
 
  if (isset($_POST['metodo']) && $_POST['metodo'] == 'actualizar') {
     parse_str($_POST['data'], $arrDatos);
+    
     if ($objeto::Actualizar('cargo', $arrDatos)) {
         echo json_encode(["respuesta" => true] );
     } else {

@@ -62,6 +62,7 @@
                 <form id="formAgregarProducto" method="post" onsubmit=" return registrarProducto()">
                     <div class="form-group">
                         <label for="nombreProducto">Nombre</label>
+
                         <input type="text" class="form-control text-uppercase" name="nombreProducto" id="nombreProducto" placeholder="Nombre del producto" required>
                     </div>
                     <div class="form-group">
@@ -71,6 +72,7 @@
                     <div class="form-group">
                         <label for="categoriaProducto">Categoría</label>
                         <select class="form-control" name="categoriaProducto" id="categoriaProducto"></select>
+
                     </div>
                     <div class="form-group">
                         <label for="stockProducto">Stock</label>
@@ -78,7 +80,9 @@
                     </div>
                     <div class="form-group">
                         <label for="precioProducto">Precio</label>
+
                         <input type="number" class="form-control" name="precioProducto" id="precioProducto" placeholder="Precio del producto" step="0.01" required>
+
                     </div>
                     <hr>
                     <button type="submit" class="btn btn-primary float-right" id="btnGuardar">Guardar producto</button>
@@ -139,8 +143,10 @@
                 </button>
             </div>
             <div class="modal-body">
+
                 <form id="formEditarProducto">
                     <input type="text" class="form-control" id="id_producto_editar" disabled>
+
 
                     <div class="form-group">
                         <label for="editarNombreProducto">Nombre</label>

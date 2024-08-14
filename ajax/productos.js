@@ -151,8 +151,10 @@ function ActualizarProducto() {
         complete: function () { $('body').LoadingOverlay("hide"); },
         error: function () { $('body').LoadingOverlay("hide"); },
         success: function (response) {
+
             if (response.respuesta) {
-                $('#modal_editar_producto').modal('hide');
+
+                $('#modalEditarProducto').modal('hide');
                 Swal.fire({
                     position: 'top-end',
                     title: 'Mensaje',
@@ -160,10 +162,13 @@ function ActualizarProducto() {
                     icon: 'success',
                     confirmButtonText: 'Ok'
                 }).then((result) => {
-                    if (result.isConfirmed) {
-                        $('#tbListarProducto').DataTable().ajax.reload(null, false);
+                    if (result.isConfirmed) {    
+                        
+
+                        
+                        $('#tbProductos').DataTable().ajax.reload(null, false);
                         Swal.close();
-                        $("#frmEditarProducto")[0].reset();
+                        $("#formEditarProducto")[0].reset();
                     }
                 });
             }
@@ -224,8 +229,10 @@ function validar_existencia_producto(codigo_producto) {
         type: "POST",
         url: "controladores/productos.controlador.php",
         data: {
+
             metodo: "validar_existencia_producto",
             codigo: codigo_producto,
+
         },
         dataType: "json",
     });

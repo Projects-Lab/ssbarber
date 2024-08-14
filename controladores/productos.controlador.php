@@ -34,9 +34,9 @@ class ControladorProductos
         return ModeloProductos::mdlEliminarProducto($datos);
     }
 
-    static public function ctrValidarProducto($codigo)
+    static public function ctrValidarProducto($codigo_producto)
     {
-        return ModeloProductos::mdlValidarProducto($codigo);
+        return ModeloProductos::mdlValidarProducto($codigo_producto);
     }
 }
 
@@ -45,6 +45,7 @@ $objeto = new ControladorProductos();
 if ($_POST['metodo'] == 'validar_existencia_producto') {
     $codigo = strtoupper($_POST['codigo']);
     if ($objeto::ctrValidarProducto($codigo)) {
+
         echo json_encode(["respuesta" => true]);
     } else {
         echo json_encode(["respuesta" => false]);
@@ -72,6 +73,7 @@ if ($_POST['metodo'] == 'agregar_producto') {
 
 if ($_POST['metodo'] == 'actualizar_producto') {
     parse_str($_POST['data'], $arrDatos);
+    
     if ($objeto::ctrActualizarProducto($arrDatos)) {
         echo json_encode(["respuesta" => true]);
     } else {
