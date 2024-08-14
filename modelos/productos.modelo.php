@@ -5,9 +5,17 @@ class ModeloProductos
 {
     static public function mdlListarProductos()
     {
-        $sql = 'SELECT *
-                FROM productos p
-                ORDER BY p.nombre asc';
+        $sql = 'SELECT
+                    p.id AS id,
+                    p.nombre AS nombre,
+                    p.codigo AS codigo,
+                    ct.nombre AS categoria,
+                    p.precio as precio,
+                    p.stock as stock
+                FROM
+                productos p,
+                categorias ct
+                ORDER BY p.nombre ASC';
         $stmt = Conexion::conectar()->query($sql);
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -28,12 +36,12 @@ class ModeloProductos
 
     static public function mdlRegistrarProducto($datos)
     {
-        $sql = "INSERT INTO productos(nombre, codigo, categoria, stock, precio) 
-                VALUES (:nombre, :codigo, :categoria, :stock, :precio)";
+        $sql = "INSERT INTO productos(nombre, codigo, categoria_id, stock, precio) 
+                VALUES (:nombre, :codigo, :categoria_id, :stock, :precio)";
         $stmt = Conexion::conectar()->prepare($sql);
         $stmt->bindParam(":nombre", $datos['nombreProducto'], PDO::PARAM_STR);
         $stmt->bindParam(":codigo", $datos['codigoProducto'], PDO::PARAM_STR);
-        $stmt->bindParam(":categoria", $datos['categoriaProducto'], PDO::PARAM_STR);
+        $stmt->bindParam(":categoria_id", $datos['categoriaProducto'], PDO::PARAM_INT);
         $stmt->bindParam(":stock", $datos['stockProducto'], PDO::PARAM_INT);
         $stmt->bindParam(":precio", $datos['precioProducto'], PDO::PARAM_STR);
 
@@ -96,7 +104,7 @@ class ModeloProductos
         $stmt->bindParam(":codigoProducto", $codigo_producto, PDO::PARAM_STR);
         $stmt->execute();
 
-        if ($stmt->rowCount() > 0) {
+        if ($stmt->fetchColumn() > 0) {
             return true;
         } else {
             return false;

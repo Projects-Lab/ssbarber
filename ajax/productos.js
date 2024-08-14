@@ -1,10 +1,29 @@
+function listarCategorias() {
+    $('#categoriaProducto').empty();
+    $.ajax({
+        type: "POST",
+        url: "controladores/categoria.controlador.php",
+        data: {
+            metodo: "categoria_select"
+        },
+        dataType: "json",
+        success: function (response) {
+            let option = "<option value='0' disabled>Seleccione</option>";
+            response.forEach(element => {
+                option += `<option value='${element.id}'>${element.nombre}</option>`;
+            });
+            $('#categoriaProducto').append(option);
+        }
+    });
+}
+
 function registrarProducto() {
     $.ajax({
         type: "POST",
         url: "controladores/productos.controlador.php",
         data: {
             metodo: "agregar_producto",
-            data: $("#frmAgregarProducto").serialize()
+            data: $("#formAgregarProducto").serialize()
         },
         dataType: 'JSON',
         beforeSend: function () { $('body').LoadingOverlay("show"); },
@@ -12,19 +31,16 @@ function registrarProducto() {
         error: function () { $('body').LoadingOverlay("hide"); },
         success: function (response) {
             if (response.respuesta) {
-                $('#modal_agregar_producto').modal('hide');
+                $('#modalAgregarProducto').modal('hide');
+                $("#formAgregarProducto")[0].reset();
+                $('#tbProductos').DataTable().ajax.reload(null, false);
                 Swal.fire({
                     position: 'top-end',
                     title: 'Mensaje',
                     text: "Producto registrado!",
                     icon: 'success',
-                    confirmButtonText: 'Ok'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        Swal.close();
-                        $("#frmAgregarProducto")[0].reset();
-                        $('#tbListarProducto').DataTable().ajax.reload(null, false);
-                    }
+                    showConfirmButton: false,
+                    timer: 1500
                 });
             }
         }
@@ -213,20 +229,23 @@ function validar_existencia_producto(codigo_producto) {
         type: "POST",
         url: "controladores/productos.controlador.php",
         data: {
-            metodo: "validar_existencia",
-            codigo_producto: codigo_producto,
+
+            metodo: "validar_existencia_producto",
+            codigo: codigo_producto,
+
         },
         dataType: "json",
     });
 }
 
-const inputCodigo = document.getElementById("codigoProducto");
-
-inputCodigo.addEventListener("focusout", validarCodigoProducto);
-
 function validarCodigoProducto(event) {
     const codigo = event.target.value;
+
     const btnGuardar = document.getElementById("btnGuardar");
+
+    if (codigo == "") {
+        return false;
+    }
 
     validar_existencia_producto(codigo)
         .done(function (response) {
@@ -256,5 +275,10 @@ function validarCodigoProducto(event) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
+    listarCategorias();
     ListarProductos();
+
+    const inputCodigo = document.getElementById("codigoProducto");
+
+    inputCodigo.addEventListener("focusout", validarCodigoProducto);
 });

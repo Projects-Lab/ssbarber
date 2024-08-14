@@ -24,7 +24,8 @@ class ModeloCargos{
 			return "ok";	
 		}else{
 			return "error";
-		}	
+		}
+
 		$stmt = null;
 	}
 
