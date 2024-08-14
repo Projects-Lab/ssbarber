@@ -233,7 +233,12 @@ function validar_existencia_producto(codigo_producto) {
 
 function validarCodigoProducto(event) {
     const codigo = event.target.value;
+
     const btnGuardar = document.getElementById("btnGuardar");
+
+    if (codigo == "") {
+        return false;
+    }
 
     validar_existencia_producto(codigo)
         .done(function (response) {
