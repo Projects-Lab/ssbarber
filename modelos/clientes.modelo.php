@@ -76,14 +76,10 @@ class ModeloPacientes
 
     static public function mdlRegistrarPaciente($datos)
     {
-        $sql = "INSERT INTO paciente(tipo_documento_id, numero_identificacion, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, 
-                            sexo, fecha_nacimiento, edad, estado_civil, ocupacion, telefono_1, telefono_2, direccion_residencia, zona_paciente, id_municipio, 
-                            id_departamento, responsable, parentesco_responsable, telefono_parentesco, responsable_2, telefono_responsable_2, 
-                            aseguradora_id, antecedentes_alergia, antecedentes_patologico, antecedentes_medicacion, antecedentes_liqali, id_eps) 
+        $sql = "INSERT INTO clientes(tipo_documento_id, numero_identificacion, primer_nombre, segundo_nombre, primer_apellido, segundo_apellido, 
+                            sexo, fecha_nacimiento, edad, telefono_1, direccion_residencia, id_municipio, id_departamento) 
                 VALUES (:tipo_documento_id, :numero_identificacion, :primer_nombre, :segundo_nombre, :primer_apellido, :segundo_apellido, 
-                            :sexo, :fecha_nacimiento, :edad, :estado_civil, :ocupacion, :telefono_1, :telefono_2, :direccion_residencia, :zona_paciente, :id_municipio, 
-                            :id_departamento, :responsable, :parentesco_responsable, :telefono_parentesco, :responsable_2, :telefono_responsable_2, 
-                            :aseguradora_id, :antecedentes_alergia, :antecedentes_patologico, :antecedentes_medicacion, :antecedentes_liqali, :id_eps)";
+                            :sexo, :fecha_nacimiento, :edad, :telefono_1, :direccion_residencia, :id_municipio, :id_departamento)";
 
         $stmt = Conexion::conectar()->prepare($sql);
         $stmt->bindParam(":tipo_documento_id", $datos['tipoDocumentoPaciente'], PDO::PARAM_INT);
@@ -95,29 +91,10 @@ class ModeloPacientes
         $stmt->bindParam(":sexo", $datos['generoPaciente'], PDO::PARAM_STR);
         $stmt->bindParam(":fecha_nacimiento", $datos['fechaNacimientoPaciente'], PDO::PARAM_STR);
         $stmt->bindParam(":edad", $datos['edadPaciente'], PDO::PARAM_INT);
-        $stmt->bindParam(":estado_civil", $datos['estadoCivilPaciente'], PDO::PARAM_STR);
-        $stmt->bindParam(":ocupacion", $datos['pacienteOcupacion'], PDO::PARAM_STR);
         $stmt->bindParam(":telefono_1", $datos['celularPaciente'], PDO::PARAM_INT);
-        $stmt->bindParam(":telefono_2", $datos['telefonoPaciente'], PDO::PARAM_INT);
         $stmt->bindParam(":direccion_residencia", $datos['direccionResidenciaPaciente'], PDO::PARAM_STR);
-        $stmt->bindParam(":zona_paciente", $datos['zonaPaciente'], PDO::PARAM_STR);
         $stmt->bindParam(":id_municipio", $datos['municipioPaciente'], PDO::PARAM_INT);
         $stmt->bindParam(":id_departamento", $datos['departamentoPaciente'], PDO::PARAM_INT);
-        $stmt->bindParam(":responsable", $datos['acompanantePaciente'], PDO::PARAM_STR);
-
-        $stmt->bindParam(":parentesco_responsable", $datos['parentezcoPaciente'], PDO::PARAM_STR);
-        $stmt->bindParam(":telefono_parentesco", $datos['telefonoacompañante'], PDO::PARAM_INT);
-        $stmt->bindParam(":responsable_2", $datos['avisarPaciente'], PDO::PARAM_STR);
-
-        $stmt->bindParam(":telefono_responsable_2", $datos['celularAvisar'], PDO::PARAM_INT);
-        $stmt->bindParam(":aseguradora_id", $datos['aseguradoraPaciente'], PDO::PARAM_INT);
-
-        $stmt->bindParam(":antecedentes_alergia", $datos['alergiaPaciente'], PDO::PARAM_STR);
-        $stmt->bindParam(":antecedentes_patologico", $datos['patologicoPaciente'], PDO::PARAM_STR);
-        $stmt->bindParam(":antecedentes_medicacion", $datos['medicacionPaciente'], PDO::PARAM_STR);
-        $stmt->bindParam(":antecedentes_liqali", $datos['liquidosAlimentosPaciente'], PDO::PARAM_STR);
-
-        $stmt->bindParam(":id_eps", $datos['epsPaciente'], PDO::PARAM_INT);
 
         if ($stmt->execute()) {
             return true;
@@ -129,14 +106,10 @@ class ModeloPacientes
 
     static public function mdlActualizarPaciente($datos)
     {
-        $sql = "UPDATE paciente SET tipo_documento_id=:tipo_documento_id,numero_identificacion=:numero_identificacion,
+        $sql = "UPDATE clientes SET tipo_documento_id=:tipo_documento_id,numero_identificacion=:numero_identificacion,
                         primer_nombre=:primer_nombre,segundo_nombre=:segundo_nombre,primer_apellido=:primer_apellido,segundo_apellido=:segundo_apellido,
-                        sexo=:sexo,fecha_nacimiento=:fecha_nacimiento,edad=:edad,estado_civil=:estado_civil,ocupacion=:ocupacion,
-                        telefono_1=:telefono_1,telefono_2=:telefono_2,direccion_residencia=:direccion_residencia,zona_paciente=:zona_paciente,
-                        id_municipio=:id_municipio,id_departamento=:id_departamento,responsable=:responsable,parentesco_responsable=:parentesco_responsable,
-                        telefono_parentesco=:telefono_parentesco,responsable_2=:responsable_2,telefono_responsable_2=:telefono_responsable_2,
-                        aseguradora_id=:aseguradora_id,antecedentes_alergia=:antecedentes_alergia,antecedentes_patologico=:antecedentes_patologico,
-                        antecedentes_medicacion=:antecedentes_medicacion,antecedentes_liqali=:antecedentes_liqali,id_eps=:id_eps WHERE id = :id";
+                        sexo=:sexo,fecha_nacimiento=:fecha_nacimiento,edad=:edad, telefono_1=:telefono_1, direccion_residencia=:direccion_residencia,
+                        id_municipio=:id_municipio,id_departamento=:id_departamento WHERE id = :id";
 
         $stmt = Conexion::conectar()->prepare($sql);
         $stmt->bindParam(":tipo_documento_id", $datos['tipoDocumentoPaciente'], PDO::PARAM_INT);
@@ -148,27 +121,10 @@ class ModeloPacientes
         $stmt->bindParam(":sexo", $datos['generoPaciente'], PDO::PARAM_STR);
         $stmt->bindParam(":fecha_nacimiento", $datos['fechaNacimientoPaciente'], PDO::PARAM_STR);
         $stmt->bindParam(":edad", $datos['edadPaciente'], PDO::PARAM_INT);
-        $stmt->bindParam(":estado_civil", $datos['estadoCivilPaciente'], PDO::PARAM_STR);
-        $stmt->bindParam(":ocupacion", $datos['pacienteOcupacion'], PDO::PARAM_STR);
         $stmt->bindParam(":telefono_1", $datos['celularPaciente'], PDO::PARAM_STR);
-        $stmt->bindParam(":telefono_2", $datos['telefonoPaciente'], PDO::PARAM_STR);
         $stmt->bindParam(":direccion_residencia", $datos['direccionResidenciaPaciente'], PDO::PARAM_STR);
-        $stmt->bindParam(":zona_paciente", $datos['zonaPaciente'], PDO::PARAM_STR);
         $stmt->bindParam(":id_municipio", $datos['municipioPaciente'], PDO::PARAM_INT);
         $stmt->bindParam(":id_departamento", $datos['departamentoPaciente_editar'], PDO::PARAM_INT);
-        $stmt->bindParam(":responsable", $datos['acompanantePaciente'], PDO::PARAM_STR);
-        $stmt->bindParam(":parentesco_responsable", $datos['parentezcoPaciente'], PDO::PARAM_STR);
-        $stmt->bindParam(":telefono_parentesco", $datos['telefonoAcomp'], PDO::PARAM_STR);
-        $stmt->bindParam(":responsable_2", $datos['avisarPaciente'], PDO::PARAM_STR);
-        $stmt->bindParam(":telefono_responsable_2", $datos['celularAvisar'], PDO::PARAM_STR);
-        $stmt->bindParam(":aseguradora_id", $datos['aseguradoraPaciente'], PDO::PARAM_INT);
-
-        $stmt->bindParam(":antecedentes_alergia", $datos['alergiaPaciente'], PDO::PARAM_STR);
-        $stmt->bindParam(":antecedentes_patologico", $datos['patologicoPaciente'], PDO::PARAM_STR);
-        $stmt->bindParam(":antecedentes_medicacion", $datos['medicacionPaciente'], PDO::PARAM_STR);
-        $stmt->bindParam(":antecedentes_liqali", $datos['liquidosAlimentosPaciente'], PDO::PARAM_STR);
-
-        $stmt->bindParam(":id_eps", $datos['epsPaciente'], PDO::PARAM_INT);
 
         $stmt->bindParam(":id", $datos['id_paciente_editar'], PDO::PARAM_INT);
 
@@ -192,7 +148,7 @@ class ModeloPacientes
 
     static public function mdlEliminarPaciente($id)
     {
-        $sql = "DELETE FROM paciente WHERE id = :id";
+        $sql = "DELETE FROM clientes WHERE id = :id";
         $stmt = Conexion::conectar()->prepare($sql);
         $stmt->bindParam(":id", $id, PDO::PARAM_INT);
         if ($stmt->execute()) {
@@ -205,7 +161,7 @@ class ModeloPacientes
 
     static public function mdlValidarPaciente($numero_identificacion)
     {
-        $sql = "SELECT * FROM paciente  WHERE numero_identificacion = :identificacionPaciente";
+        $sql = "SELECT * FROM clientes  WHERE numero_identificacion = :identificacionPaciente";
         $stmt = Conexion::conectar()->prepare($sql);
         $stmt->bindParam(":identificacionPaciente", $numero_identificacion, PDO::PARAM_STR);
         $stmt->execute();

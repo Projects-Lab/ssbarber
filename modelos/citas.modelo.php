@@ -35,18 +35,19 @@ class ModeloCitas
 
     static public function mdlIngresar($tabla, $datos)
     {
-        $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(fecha_cita, hora_cita, id_cliente, nombre_cliente, apellidos_cliente, estudio, empleado) VALUES (:fecha_cita, :hora_cita, :id_cliente, :nombre_cliente, :apellidos_cliente, :estudio, :empleado)");
-        $stmt->bindParam(":fecha_cita", $datos["fecha_cita"], PDO::PARAM_STR);
-        $stmt->bindParam(":hora_cita", $datos["hora_cita"], PDO::PARAM_STR);
-        $stmt->bindParam(":id_cliente", $datos["id_cliente"], PDO::PARAM_INT);
-        $stmt->bindParam(":nombre_cliente", $datos["nombre_cliente"], PDO::PARAM_STR);
-        $stmt->bindParam(":apellidos_cliente", $datos["apellidos_cliente"], PDO::PARAM_STR);
-        $stmt->bindParam(":estudio", $datos["estudio"], PDO::PARAM_STR);
-        $stmt->bindParam(":empleado", $datos["empleado"], PDO::PARAM_STR);
+        $sql = "INSERT INTO citas(id_cliente, id_empleado, id_servicio, fecha_asignada, hora_asignada, estado) VALUES
+                 (:id_cliente, :id_empleado, :id_servicio, :fecha_asignada, :hora_asignada, :estado)";
+        $stmt = Conexion::conectar()->prepare($sql);
+        $stmt->bindParam(":id_cliente", $datos["codigo_cliente"], PDO::PARAM_INT);
+        $stmt->bindParam(":id_empleado", $datos["empleado"], PDO::PARAM_INT);
+        $stmt->bindParam(":id_servicio", $datos["servicio"], PDO::PARAM_INT);
+        $stmt->bindParam(":fecha_asignada", $datos["fecha_cita"], PDO::PARAM_STR);
+        $stmt->bindParam(":hora_asignada", $datos["hora_cita"], PDO::PARAM_STR);
+        $stmt->bindParam(":estado", $datos["estado"], PDO::PARAM_STR);
         if ($stmt->execute()) {
-            return "ok";
+            return true;
         } else {
-            return "error";
+            return false;
         }
         $stmt = null;
     }
@@ -103,6 +104,44 @@ class ModeloCitas
         $stmt->bindParam(":id", $id, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt = null;
+    }
+
+    static public function mdlListarCliente($numero)
+    {
+        $stmt = Conexion::conectar()->prepare("SELECT * FROM clientes WHERE numero_identificacion = :numero");
+        $stmt->bindParam(":numero", $numero, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt = null;
+    }
+
+    static public function mdlListarServios()
+    {
+        $stmt = Conexion::conectar()->query("SELECT * FROM servicios");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt = null;
+    }
+
+    static public function mdlListarEmpleados()
+    {
+        $stmt = Conexion::conectar()->query("SELECT * FROM empleado");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt = null;
+    }
+
+    static public function mdlAtenderCita($cita_id)
+    {
+        $stmt = Conexion::conectar()->prepare("UPDATE citas SET estado = 'A' WHERE id = :id");
+        $stmt->bindParam(":id", $cita_id, PDO::PARAM_INT);
+
+        if ($stmt->execute()) {
+            return true;
+        } else {
+            return false;
+        }
         $stmt = null;
     }
 }

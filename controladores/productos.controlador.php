@@ -19,6 +19,11 @@ class ControladorProductos
         return ModeloProductos::mdlConsultarProducto($producto);
     }
 
+    static public function ctrInfoProductoVenta($producto)
+    {
+        return ModeloProductos::mdlInfoProductoVenta($producto);
+    }
+
     static public function ctrEditarProducto($id)
     {
         return ModeloProductos::mdlEditarProducto($id);
@@ -55,6 +60,11 @@ if ($_POST['metodo'] == 'validar_existencia_producto') {
 if ($_POST['metodo'] == 'consultar_producto') {
     $producto = $_POST['id_producto'];
     echo json_encode($objeto::ctrConsultarProducto($producto));
+}
+
+if ($_POST['metodo'] == 'consultar_producto_venta') {
+    $producto = $_POST['id_producto'];
+    echo json_encode($objeto::ctrInfoProductoVenta($producto));
 }
 
 if ($_POST['metodo'] == 'editar_producto') {

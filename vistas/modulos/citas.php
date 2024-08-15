@@ -45,29 +45,25 @@
 
 
 <!-- MODAL INSERTAR-->
-<div class="modal fade" id="modalAgregarCita" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="modalAgregarCita" tabindex="-1" aria-labelledby="exampleModalLabel" data-backdrop="static" data-keyboard="false" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content">
             <div class="modal-header bg-info">
-                <h4 class="modal-title fs-5" id="exampleModalLabel"> </h4>
+                <h4 class="modal-title fs-5" id="exampleModalLabel">Agendar Nueva Cita</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
             <div class="modal-body">
                 <form id="frmAgregarCita" onsubmit="return registrarCita()" method="post" autocomplete="off">
-
-                    <h4>Agendar Nueva Cita</h4>
-                    <hr>
-                    <div class="row text-center justify-content-center">
-
-                        <div class="col-md-3">
+                    <div class="row">
+                        <div class="col-md-4">
                             <label for="fecha_cita">Fecha de la Cita:</label>
                             <input type="date" class="form-control" id="fecha_cita" name="fecha_cita" required>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <label for="hora_cita">Hora de la Cita:</label>
-                            <input type="text" class="form-control" id="hora_cita" name="hora_cita" required>
+                            <input type="time" class="form-control" id="hora_cita" name="hora_cita" required>
                         </div>
                     </div>
                     <div class="row">
@@ -75,6 +71,9 @@
                             <label for="id_cliente">ID Cliente:</label>
                             <div class="input-group mb-3">
                                 <input type="number" class="form-control" id="id_cliente" name="id_cliente" required>
+                                <!-- Id del cliente -->
+                                <input type="hidden" name="codigo_cliente" id="codigo_cliente">
+                                <!--  -->
                                 <div class="input-group-append">
                                     <button class="btn btn-outline-secondary" type="button" id="buscarCliente"><i class="fa fa-plus" aria-hidden="true"></i></button>
                                 </div>
@@ -97,8 +96,8 @@
                     <!-- fin del row -->
                     <div class="row">
                         <div class="col-md-6">
-                            <label for="estudio">Servicio:</label>
-                            <select class="form-control" id="estudio" name="estudio" required>
+                            <label for="servicio">Servicio:</label>
+                            <select class="form-control" id="servicio" name="servicio" required>
                             </select>
                         </div>
                         <div class="col-md-6">
@@ -108,12 +107,11 @@
                         </div>
 
                     </div>
+                    <hr>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-success">Agendar Cita</button>
                     <!-- fin del row -->
                 </form>
-            </div>
-            <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-success">Agendar Cita</button>
             </div>
             </form>
         </div>

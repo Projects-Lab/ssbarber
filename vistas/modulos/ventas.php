@@ -25,7 +25,7 @@
                                 <thead>
                                     <tr>
                                         <th>Fecha</th>
-                                        <!-- <th>Consecutivo</th> -->
+                                        <th>Consecutivo</th>
                                         <th>ID Cliente</th>
                                         <th>Cliente</th>
                                         <th>Producto</th>
@@ -54,16 +54,13 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="frmAgregarVenta">
-                <div class="modal-body">
+            <div class="modal-body">
+                <form id="frmAgregarVenta" method="post" onsubmit="return registrarVenta()">
                     <div class="form-group">
                         <label for="fechaVenta">Fecha</label>
                         <input type="date" class="form-control" id="fechaVenta" name="fechaVenta" required>
                     </div>
-                    <div class="form-group">
-                        <!-- <label for="consecutivoVenta">Consecutivo Venta</label> -->
-                        <input type="hidden" class="form-control" id="consecutivoVenta" name="consecutivoVenta" required>
-                    </div>
+
                     <div class="form-group">
                         <label for="clienteVenta">Cliente (Cédula)</label>
                         <select class="form-control" id="clienteVenta" name="clienteVenta" required>
@@ -80,12 +77,11 @@
                         <label for="valorVenta">Valor</label>
                         <input type="text" class="form-control" id="valorVenta" name="valorVenta" required>
                     </div>
-                </div>
-                <div class="modal-footer">
+                    <hr>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                     <button type="submit" class="btn btn-primary">Guardar</button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 </div>

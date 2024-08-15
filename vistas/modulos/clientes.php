@@ -76,15 +76,6 @@
                             <label for="">Identificación</label>
                             <input type="text" maxlength="16" class="form-control form-control-sm" name="identificacionPaciente" id="identificacionPaciente" placeholder="Número de documento" required>
                         </div>
-                        <!-- <div class="col-md-3">
-                            <label for="">Lugar Expedicion</label>
-                            <input type="text" class="form-control form-control-sm" name="lugarexpedicionPaciente" id="lugarexpedicionPaciente" placeholder="Lugar Exp." required>
-                        </div> -->
-                        <!-- FECHA DE EXPEDICIÓN -->
-                        <!-- <div class="col-md-3">
-                            <label for="">Fecha de Expedicion</label>
-                            <input type="date" class="form-control form-control-sm" name="fechaexpedicionPaciente" id="fechaexpedicionPaciente" required data-toggle="tooltip" data-placement="top" title="Fecha Expedicion">
-                        </div> -->
 
                     </div>
                     <div class="row">
@@ -112,14 +103,14 @@
                         <!-- FECHA NACIMIENTO -->
                         <div class="col-md-3 mt-3">
                             <label for="">Fecha nacimiento</label>
-                            <input type="date" class="form-control form-control-sm" name="fechaNacimientoPaciente" id="fechaNacimientoPaciente" required data-toggle="tooltip" data-placement="top" title="Fecha nacimiento" oninput="calcularEdad(this.value)">
+                            <input type="date" class="form-control form-control-sm" name="fechaNacimientoPaciente" id="fechaNacimientoPaciente" required data-toggle="tooltip" data-placement="top" title="Fecha nacimiento" oninput="calcularEdad1(this.value)">
                         </div>
                         <!-- EDAD -->
                         <div class="col-md-1 mt-3">
                             <label for="">Edad</label>
-                            <input type="number" class="form-control form-control-sm" name="edadPaciente" id="edadPaciente" placeholder="Edad" inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                            <input type="number" class="form-control form-control-sm" name="edadPaciente" id="edadPaciente" placeholder="Edad" readonly inputmode="numeric" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                             <script>
-                                function calcularEdad(fechaNacimiento) {
+                                function calcularEdad1(fechaNacimiento) {
                                     var fechaActual = new Date();
                                     var fechaNac = new Date(fechaNacimiento);
                                     var edad = fechaActual.getFullYear() - fechaNac.getFullYear();
@@ -178,25 +169,13 @@
                         <!-- departamento -->
                         <div class="col-md-3 mt-3">
                             <label for="">Departamento</label>
-                            <select name="departamentoPaciente" class="form-control form-control-sm" id="departamentoPaciente" aria-placeholder="Departameno" required onchange="listarMunicipio(this)">
-                                <option selected disabled value="">Seleccione</option>
-                                <option value="Cordoba">Cordoba</option>
-                                <option value="Ataltic">Atlantico</option>
-                                <option value="O">Sucre</option>
-                                <option value="O">...</option>
-                                <option value="O">...</option>
-                            </select>
+                            <select name="departamentoPaciente" class="form-control form-control-sm" id="departamentoPaciente" aria-placeholder="Departameno" required onchange="listarMunicipio(this)"></select>
                         </div>
                         <!-- CIUDAD -->
                         <div class="col-md-3 mt-3">
                             <label for="">Municipio</label>
                             <select name="municipioPaciente" class="form-control form-control-sm" id="municipioPaciente" aria-placeholder="municipio Paciente" required>
                                 <option value="">Seleccione</option>
-                                <option value="Cordoba">Monteria</option>
-                                <option value="Ataltic">Sincelejo</option>
-                                <option value="O">Cotorra</option>
-                                <option value="O">...</option>
-                                <option value="O">...</option>
                             </select>
                         </div>
                     </div>
@@ -256,11 +235,6 @@
                         <label for="">Identificación</label>
                         <input type="text" class="form-control form-control-sm" name="identificacionPaciente_ver" id="identificacionPaciente_ver" placeholder="Número de documento" readonly>
                     </div>
-                    <!-- FECHA DE EXPEDICIÓN -->
-                    <!-- <div class="col-md-3" style="display: none;">
-                            <input type="text" class="form-control form-control-sm" name="fechaExpedicionPaciente"
-                                placeholder="Lugar de expedición" required>
-                        </div> -->
                     <!-- NOMBRES -->
                     <div class="col-md-3">
                         <label for="">Primer nombre</label>
@@ -287,20 +261,19 @@
                         <input type="text" class="form-control form-control-sm" name="generoPaciente" id="generoPaciente_ver" readonly>
                     </div>
                     <!-- FECHA NACIMIENTO -->
-                    <div class="col-md-3 mt-3">
+                    <div class="col-md-2 mt-3">
                         <label for="">Fecha nacimiento</label>
                         <input type="date" class="form-control form-control-sm" name="fechaNacimientoPaciente" id="fechaNacimientoPaciente_ver" readonly title="Fecha nacimiento">
                     </div>
-                </div>
-                <!-- fin del row -->
-                <div class="row">
+                    
                     <!-- EDAD -->
-                    <div class="col-md-3 mt-3">
+                    <div class="col-md-1 mt-3">
                         <label for="">Edad</label>
                         <input type="text" class="form-control form-control-sm" name="edadPaciente" id="edadPaciente_ver" placeholder="Edad" readonly>
                     </div>
                 </div>
-                <!-- FIN DEL ROW -->
+                <!-- fin del row -->
+
                 <div class="row">
                     <div class="col-sm-6">
                         <h5 class="mt-4 text-primary">Datos de contacto del Cliente</h5>
@@ -312,16 +285,13 @@
                         <label for="">Celular</label>
                         <input type="text" class="form-control form-control-sm" name="celularPaciente" id="celularPaciente_ver" placeholder="Celular" readonly>
                     </div>
-                    <!-- TELEFONO -->
+                    
+                    <!-- DIRECCION DE RESIDENCIA -->
                     <div class="col-md-3">
-                        <label for="">Teléfono</label>
-                        <input type="text" class="form-control form-control-sm" name="telefonoPaciente" id="telefonoPaciente_ver" placeholder="Telefono" readonly>
+                        <label for="">Dirección</label>
+                        <input type="text" class="form-control form-control-sm" name="direccionResidenciaPaciente" id="direccionResidenciaPaciente_ver" placeholder="Dirección de residencia" readonly>
                     </div>
-
-                </div>
-                <!-- FIN DEL ROW -->
-                <h5 class="mt-4 text-primary">Ubicación</h5>
-                <div class="row">
+                    
                     <!-- departamento -->
                     <div class="col-md-3">
                         <label for="">Departamento</label>
@@ -332,13 +302,8 @@
                         <label for="">Municipio</label>
                         <input type="text" class="form-control form-control-sm" id="municipioPaciente_ver" aria-placeholder="municipio Paciente" readonly>
                     </div>
-                    <!-- DIRECCION DE RESIDENCIA -->
-                    <div class="col-md-3">
-                        <label for="">Dirección</label>
-                        <input type="text" class="form-control form-control-sm" name="direccionResidenciaPaciente" id="direccionResidenciaPaciente_ver" placeholder="Dirección de residencia" readonly>
-                    </div>
                 </div>
-                <!-- fin del row -->
+                <!-- FIN DEL ROW -->
             </div>
         </div>
     </div>
@@ -370,17 +335,47 @@
                             <label for="">Identificación</label>
                             <input type="text" class="form-control form-control-sm" name="identificacionPaciente_editar" id="identificacionPaciente_editar" placeholder="Número de documento" required>
                         </div>
-                        <div class="col-md-3">
-                            <label for="">Lugar Expedicion</label>
-                            <input type="text" class="form-control form-control-sm" name="lugarexpedicionPaciente" id="lugarexpedicionPaciente_editar" placeholder="Lugar Exp." required>
+                        
+                        <!-- FECHA NACIMIENTO -->
+                        <div class="col-md-2">
+                            <label for="">Fecha nacimiento</label>
+                            <input type="date" class="form-control form-control-sm" name="fechaNacimientoPaciente" id="fechaNacimientoPaciente_editar"  oninput="calcularEdad(this.value)" required data-toggle="tooltip" data-placement="top" title="Fecha nacimiento" >
                         </div>
-                        <!-- FECHA DE EXPEDICIÓN -->
-                        <!-- <div class="col-md-3">
-                            <label for="">Fecha de Expedicion</label>
-                            <input type="date" class="form-control form-control-sm" name="fechaexpedicionPaciente" id="fechaexpedicionPaciente_editar" required data-toggle="tooltip" data-placement="top" title="Fecha Expedicion">
-                        </div> -->
+                        <!-- EDAD -->
+                        <div class="col-md-1">
+                            <label for="">Edad</label>
+                            <input type="text" class="form-control form-control-sm" name="edadPaciente" id="edadPaciente_editar" placeholder="Edad" readonly required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                        </div>
+                        <script>
+                                function calcularEdad(fechaNacimiento) {
+                                    var fechaActual = new Date();
+                                    var fechaNac = new Date(fechaNacimiento);
+                                    var edad = fechaActual.getFullYear() - fechaNac.getFullYear();
 
+                                    // Verificar si el cumpleaños aún no ha pasado este año
+                                    var mesActual = fechaActual.getMonth();
+                                    var diaActual = fechaActual.getDate();
+                                    var mesNac = fechaNac.getMonth();
+                                    var diaNac = fechaNac.getDate();
 
+                                    if (mesActual < mesNac || (mesActual === mesNac && diaActual < diaNac)) {
+                                        edad--;
+                                        frmAgregarPaciente
+                                    }
+
+                                    document.getElementById('edadPaciente_editar').value = edad;
+                                }
+                            </script>
+                        <!-- SEXO -->
+                        <div class="col-md-3">
+                            <label for="">Género</label>
+                            <select class="form-control form-control-sm" name="generoPaciente" id="generoPaciente_editar">
+                                <option selected disabled>Seleccione</option>
+                                <option value="F">FEMENINO</option>
+                                <option value="M">MASCULINO</option>
+                                <option value="O">OTRO</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="row">
                         <!-- NOMBRES -->
@@ -406,43 +401,6 @@
                     <!-- fin del row -->
                     <div class="row">
 
-                        <!-- FECHA NACIMIENTO -->
-                        <div class="col-md-2 mt-3">
-                            <label for="">Fecha nacimiento</label>
-                            <input type="date" class="form-control form-control-sm" name="fechaNacimientoPaciente" id="fechaNacimientoPaciente_editar" required data-toggle="tooltip" data-placement="top" title="Fecha nacimiento">
-                        </div>
-                        <!-- EDAD -->
-                        <div class="col-md-1 mt-3">
-                            <label for="">Edad</label>
-                            <input type="text" class="form-control form-control-sm" name="edadPaciente" id="edadPaciente_editar" placeholder="Edad" required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
-                        </div>
-                        <!-- SEXO -->
-                        <div class="col-md-2 mt-3">
-                            <label for="">Género</label>
-                            <select class="form-control form-control-sm" name="generoPaciente" id="generoPaciente_editar">
-                                <option selected disabled>Seleccione</option>
-                                <option value="F">FEMENINO</option>
-                                <option value="M">MASCULINO</option>
-                                <option value="O">OTRO</option>
-                            </select>
-                        </div>
-
-                        <!-- ESTADO CIVIL -->
-                        <!-- <div class="col-md-2 mt-3">
-                            <label for="">Estado civil</label>
-                            <select class="form-control form-control-sm" name="estadoCivilPaciente" id="estadoCivilPaciente_editar" placeholder="Estado civil">
-                                <option value="SOLTERO(A)">SOLTERO(A)</option>
-                                <option value="CASADO(A)">CASADO(A)</option>
-                                <option value="DIVORCIADO(A)">DIVORCIADO(A)</option>
-                                <option value="VIUDO(A)">VIUDO(A)</option>
-                                <option value="UNION LIBRE(A)">UNION LIBRE(A)</option>
-                            </select>
-                        </div> -->
-                        <!-- ocupacion -->
-                        <!-- <div class="col-md-2 mt-3">
-                            <label for="">Ocupación</label>
-                            <input type="text" class="form-control form-control-sm" name="pacienteOcupacion" id="pacienteOcupacion_editar" placeholder="Ocupación">
-                        </div> -->
 
                     </div>
 
@@ -455,7 +413,7 @@
                     <hr>
                     <div class="row">
                         <!-- celular -->
-                        <div class="col-md-2">
+                        <div class="col-md-3 mt-3">
                             <label for="">Celular</label>
                             <input type="text" class="form-control form-control-sm" name="celularPaciente" id="celularPaciente_editar" placeholder="Celular" required oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                         </div>

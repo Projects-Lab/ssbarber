@@ -23,10 +23,17 @@ class ModeloProductos
     }
     static public function mdlConsultarProducto($id)
     {
-        $sql = "SELECT 
-                id, nombre, codigo, categoria, stock, precio
-            FROM productos
-            WHERE id = :id";
+        $sql = "SELECT
+                    p.id AS id,
+                    p.nombre AS nombre,
+                    p.codigo AS codigo,
+                    ct.nombre AS categoria,
+                    p.precio as precio,
+                    p.stock as stock
+                FROM
+                productos p,
+                categorias ct
+            WHERE p.id = :id";
         $stmt = Conexion::conectar()->prepare($sql);
         $stmt->bindParam(":id", $id, PDO::PARAM_INT);
         $stmt->execute();
@@ -55,13 +62,13 @@ class ModeloProductos
 
     static public function mdlActualizarProducto($datos)
     {
-        $sql = "UPDATE productos SET nombre=:nombre, codigo=:codigo, categoria=:categoria, 
+        $sql = "UPDATE productos SET nombre=:nombre, codigo=:codigo, categoria_id=:categoria, 
                         stock=:stock, precio=:precio 
                 WHERE id = :id";
         $stmt = Conexion::conectar()->prepare($sql);
         $stmt->bindParam(":nombre", $datos['editarNombreProducto'], PDO::PARAM_STR);
         $stmt->bindParam(":codigo", $datos['editarCodigoProducto'], PDO::PARAM_STR);
-        $stmt->bindParam(":categoria", $datos['editarCategoriaProducto'], PDO::PARAM_STR);
+        $stmt->bindParam(":categoria", $datos['editarCategoriaProducto'], PDO::PARAM_INT);
         $stmt->bindParam(":stock", $datos['editarStockProducto'], PDO::PARAM_INT);
         $stmt->bindParam(":precio", $datos['editarPrecioProducto'], PDO::PARAM_STR);
         $stmt->bindParam(":id", $datos['idProductoEditar'], PDO::PARAM_INT);
@@ -76,7 +83,17 @@ class ModeloProductos
 
     static public function mdlEditarProducto($id)
     {
-        $sql = "SELECT * FROM productos WHERE id = :id";
+        $sql = "SELECT
+                    p.id AS id,
+                    p.nombre AS nombre,
+                    p.codigo AS codigo,
+                    ct.nombre AS categoria,
+                    p.precio as precio,
+                    p.stock as stock
+                FROM
+                productos p,
+                categorias ct
+                where  p.id = :id";
         $stmt = Conexion::conectar()->prepare($sql);
         $stmt->bindParam(":id", $id, PDO::PARAM_INT);
         $stmt->execute();
@@ -111,4 +128,19 @@ class ModeloProductos
         }
         $stmt = null;
     }
+
+    static public function mdlInfoProductoVenta($id)
+    {
+        $sql = "SELECT
+                    *
+                FROM
+                productos p
+                where  p.id = :id";
+        $stmt = Conexion::conectar()->prepare($sql);
+        $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt = null;
+    }
+
 }

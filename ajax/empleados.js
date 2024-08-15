@@ -10,7 +10,7 @@ function cargarCargos() {
             response.forEach(function (cargo) {
                 opciones += `<option value="${cargo.id}">${cargo.nombre}</option>`;
             });
-            $('#cargoEmpleado').html(opciones);
+            $('#cargoEmpleado, #cargoEmpleadoEditar').html(opciones);
         }
     });
 }
@@ -42,7 +42,8 @@ function registrarEmpleado() {
                     if (result.isConfirmed) {
                         Swal.close();
                         $("#form_agregar_empleado")[0].reset();
-                        $('#tbListarEmpleados').DataTable().ajax.reload(null, false);
+                        location.href = location.href; 
+                        $('#tabla_empleados').DataTable().ajax.reload(null, false);
                     }
                 })
             }
@@ -143,7 +144,7 @@ function actualizarEmpleado() {
         url: "controladores/empleado.controlador.php",
         data: ({
             metodo: "actualizar_empleado",
-            data: $("#frmEditarEmpleado").serialize()
+            data: $("#form_editar_empleado").serialize()
         }),
         dataType: 'JSON',
         beforeSend: function () { $('body').LoadingOverlay("show"); },
@@ -160,9 +161,10 @@ function actualizarEmpleado() {
                     confirmButtonText: 'Ok'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        $('#tbListarEmpleados').DataTable().ajax.reload(null, false);
+                        $('#tabla_empleados').DataTable().ajax.reload(null, false);
                         Swal.close();
-                        $("#frmEditarEmpleado")[0].reset();
+                        $("#form_editar_empleado")[0].reset();
+                        location.href = location.href; 
                     }
                 })
             }
@@ -205,7 +207,9 @@ function eliminarEmpleado(id) {
                             showConfirmButton: false,
                             timer: 1800
                         });
-                        $('#tbListarEmpleados').DataTable().ajax.reload(null, false);
+                        $('#tabla_empleados').DataTable().ajax.reload(null, false);
+                        Swal.close();
+                        location.href = location.href; 
                     } else {
                         alert("No se puede eliminar");
                     }

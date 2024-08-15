@@ -13,14 +13,16 @@ class ModeloVentas
         return $stmt->rowCount() > 0;
     }
 
-    public static function mdlListarProductos() {
+    public static function mdlListarProductos()
+    {
         $stmt = Conexion::conectar()->prepare("SELECT * FROM productos");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    
-    public static function mdlListarClientes() {
-        $stmt = Conexion::conectar()->prepare("SELECT   c.numero_identificacion,                                                    
+
+    public static function mdlListarClientes()
+    {
+        $stmt = Conexion::conectar()->prepare("SELECT  c.id, c.numero_identificacion,                                                    
                                                         CONCAT(c.primer_nombre, ' ', c.segundo_nombre, ' ', c.primer_apellido, ' ', c.segundo_apellido) AS nombre_completo
                                                         FROM clientes c");
         $stmt->execute();
@@ -30,22 +32,22 @@ class ModeloVentas
     public static function mdlConsultarVenta($id)
     {
         $stmt = Conexion::conectar()->prepare("SELECT
-    v.id,
-    v.fecha,
-    v.consecutivo_venta,
-    v.valor,
-    c.numero_identificacion,
-    c.primer_nombre,
-    c.segundo_nombre,
-    c.primer_apellido,
-    c.segundo_apellido,
-    p.nombre as producto_nombre ,
-    p.codigo as producto_codigo
-    
-FROM
-    ventas v
-INNER JOIN clientes c ON v.id_cliente = c.id
-INNER JOIN productos p ON v.id_producto = p.id WHERE v.id = :id");
+                    v.id,
+                    v.fecha,
+                    v.consecutivo_venta,
+                    v.valor,
+                    c.numero_identificacion,
+                    c.primer_nombre,
+                    c.segundo_nombre,
+                    c.primer_apellido,
+                    c.segundo_apellido,
+                    p.nombre as producto_nombre ,
+                    p.codigo as producto_codigo
+                    
+                FROM
+                    ventas v
+                INNER JOIN clientes c ON v.id_cliente = c.id
+                INNER JOIN productos p ON v.id_producto = p.id WHERE v.id = :id");
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -67,10 +69,12 @@ INNER JOIN productos p ON v.id_producto = p.id WHERE v.id = :id");
         $stmt = Conexion::conectar()->prepare(
             "INSERT INTO ventas (fecha, consecutivo_venta, id_cliente, id_producto, valor)
 
-        VALUES (:fecha, :consecutivo_venta, :id_cliente, :id_producto, :valor)");
-        
+        VALUES (:fecha, :consecutivo_venta, :id_cliente, :id_producto, :valor)"
+        );
+
+
         $stmt->bindParam(':fecha', $datos['fechaVenta'], PDO::PARAM_STR);
-        $stmt->bindParam(':consecutivo_venta', $datos['consecutivoVenta'], PDO::PARAM_STR);
+        $stmt->bindParam(':consecutivo_venta', $datos['consecutivo_venta'], PDO::PARAM_INT);
         $stmt->bindParam(':id_cliente', $datos['clienteVenta'], PDO::PARAM_STR);
         $stmt->bindParam(':id_producto', $datos['productoVenta'], PDO::PARAM_STR);
         $stmt->bindParam(':valor', $datos['valorVenta'], PDO::PARAM_STR);
@@ -125,5 +129,11 @@ INNER JOIN productos p ON v.id_producto = p.id';
         $stmt = Conexion::conectar()->prepare("DELETE FROM ventas WHERE id = :id");
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         return $stmt->execute();
+    }
+
+    public static function mdlConsultarConsecutivo()
+    {
+        $stmt = Conexion::conectar()->query("SELECT MAX(consecutivo_venta) + 1 as consecutivo_siguiento FROM ventas");
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }

@@ -144,7 +144,7 @@ function ActualizarProducto() {
         url: "controladores/productos.controlador.php",
         data: {
             metodo: "actualizar_producto",
-            data: $("#frmEditarProducto").serialize()
+            data: $("#formEditarProducto").serialize()
         },
         dataType: 'JSON',
         beforeSend: function () { $('body').LoadingOverlay("show"); },

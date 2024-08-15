@@ -144,7 +144,7 @@
             </div>
             <div class="modal-body">
 
-                <form id="formEditarProducto">
+                <form id="formEditarProducto" method="post" onsubmit=" return ActualizarProducto()">
                     <input type="text" class="form-control" id="id_producto_editar" disabled>
 
 

@@ -37,7 +37,7 @@ $html = '
                                 <img src="src\img\Logo_SSBarber.png" alt="Imagen 1" width="150" height="150">
                         </td>
                         <td style=" padding: 10px; width="200"">
-                           Factura FV0000' . $id . '<br>
+                           Factura FV-' . $consecutivo_venta . '<br>
                            ' . $fechaFormateada . ' <br>
                         </td>
                     <tr>
@@ -50,7 +50,7 @@ $html = '
                     </tr>
                     <tr>
                         <td style="width: 25%; ">N° VENTA</td>
-                        <td style="">' . $id . '</td>
+                        <td style="">' . $consecutivo_venta . '</td>
                         <td style="width: 25%; ">Fecha VENTA</td>
                         <td style="">' . $fechaFormateada . '</td>
                     </tr>

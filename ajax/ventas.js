@@ -32,6 +32,7 @@ function cargarClientes() {
     });
 }
 
+
 function ListarVentas() {
     $('#tbListarVentas').dataTable({
         "bProcessing": true,
@@ -53,7 +54,7 @@ function ListarVentas() {
         },
         "aoColumns": [
             { mData: 'fecha' },
-            // { mData: 'consecutivo' },
+            { mData: 'consecutivo' },
             { mData: 'cedula_cliente' },
             { mData: 'nombres_cliente' },
             { mData: 'producto_nombre' },
@@ -81,12 +82,12 @@ function registrarVenta() {
             metodo: "agregar_venta",
             data: $("#frmAgregarVenta").serialize()
         },
-        dataType: 'JSON',
+        dataType: 'html',
         beforeSend: function () { $('body').LoadingOverlay("show"); },
         complete: function () { $('body').LoadingOverlay("hide"); },
         error: function () { $('body').LoadingOverlay("hide"); },
         success: function (response) {
-            if (response.respuesta) {
+           /* if (response.respuesta) {
                 $('#modal_agregar_venta').modal('hide');
                 Swal.fire({
                     position: 'top-end',
@@ -101,9 +102,11 @@ function registrarVenta() {
                         $('#tbListarVentas').DataTable().ajax.reload(null, false);
                     }
                 });
-            }
+            }*/
+           console.log(response);
         }
     });
+
     return false;
 }
 
@@ -279,9 +282,6 @@ function imprimir(id) {
        }).then((result) => {
          if (result) {
           window.open('./pdf_ventas.php');
-        
-          
-           
          }
        })
    }
@@ -290,11 +290,24 @@ function imprimir(id) {
 document.addEventListener("DOMContentLoaded", () => {
     ListarVentas();
     cargarProductos();  // Llamamos a la función para cargar los cargos cuando se cargue la página
-    $('#frmAgregarVenta').on('submit', registrarVenta);  // Registrar empleado al enviar el formulario
+   // $('#frmAgregarVenta').on('submit', registrarVenta);  // Registrar empleado al enviar el formulario
 
     cargarClientes();  // Llamamos a la función para cargar los cargos cuando se cargue la página
-    $('#frmAgregarVenta').on('submit', registrarVenta);  // Registrar empleado al enviar el formulario
+   // $('#frmAgregarVenta').on('submit', registrarVenta);  // Registrar empleado al enviar el formulario
 
 
     imprimir()
+
+    $('#productoVenta').on('change', function() {
+        $("#valorVenta").val("");
+        $.ajax({
+            type: "POST",
+            url: "controladores/productos.controlador.php",
+            data: { metodo: "consultar_producto_venta", id_producto:  this.value},
+            dataType: "json",
+            success: function (response) {
+               $("#valorVenta").val(response.precio);
+            }
+        });
+    });
 });

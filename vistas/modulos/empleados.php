@@ -81,7 +81,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form id="form_editar_empleado">
+                <form id="form_editar_empleado" onsubmit="return actualizarEmpleado()" method="post">
                     <input type="hidden" id="idEmpleadoEditar" name="id_empleado">
                     <div class="form-group">
                         <label for="nombreEmpleadoEditar">Nombre</label>

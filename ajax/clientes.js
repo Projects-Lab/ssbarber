@@ -22,10 +22,62 @@ function listarTipoDocumento() {
     });
 }
 
+function listarDepartamentos() {
+    $.ajax({
+        type: "POST",
+        url: "controladores/clientes.controlador.php",
+        data: ({
+            metodo: "listar_departamentos"
+        }),
+        dataType: "json",
+        success: function (response) {
+            let option = '';
+
+            response.forEach(element => {
+                option += `<option value=${element.id_departamento}>${element.departamento}</option>`;
+            });
+
+            $("#departamentoPaciente, #departamentoPaciente_editar").append(option);
+        }
+    });
+}
+
+function listarMunicipio(data) {
+
+    var select = data.id;
+
+    $.ajax({
+        type: "POST",
+        url: "controladores/clientes.controlador.php",
+        data: ({
+            metodo: "listar_municipio", departamento: data.value
+        }),
+        dataType: "json",
+        beforeSend: function () { $('body').LoadingOverlay("show"); },
+        complete: function () { $('body').LoadingOverlay("hide"); },
+        error: function () { $('body').LoadingOverlay("hide"); },
+        success: function (response) {
+            let option = '';
+
+            response.forEach(element => {
+                option += `<option value=${element.id_municipio}>${element.municipio}</option>`;
+            });
+
+            if (select == 'departamentoPaciente') {
+                $("#municipioPaciente").empty().append(option);
+            }
+
+            if (select == 'departamentoPaciente_editar') {
+                $("#municipioPaciente_editar").empty().append(option);
+            }
+        }
+    });
+}
+
 function registrarPaciente() {
     $.ajax({
         type: "POST",
-        url: "controladores/aph.controlador.php",
+        url: "controladores/clientes.controlador.php",
         data: ({
             metodo: "agregar_paciente",
             data: $("#frmAgregarPaciente").serialize()
@@ -227,7 +279,7 @@ function ActualizarPaciente() {
 
 function EliminarPaciente(id) {
     Swal.fire({
-        title: "Desea eliminar este paciente?",
+        title: "Desea eliminar este dato?",
         text: "La acción será irreversible",
         icon: 'warning',
         showCancelButton: true,
@@ -254,7 +306,7 @@ function EliminarPaciente(id) {
                         Swal.fire({
                             position: 'top-end',
                             icon: 'success',
-                            title: 'APH eliminado',
+                            title: 'Eliminado',
                             showConfirmButton: false,
                             timer: 1800
                         });
@@ -298,15 +350,15 @@ function validarCedula(event) {
             if (response.respuesta) {
                 Swal.fire({
                     icon: "error",
-                    title: "Paciente Existe",
-                    text: "Paciente ya esta registrado.",
+                    title: "clientes Existe",
+                    text: "clientes ya esta registrado.",
                 });
                 // Si la cédula existe, deshabilita el botón de guardar
                 btnGuardar.disabled = true;
             } else {
                 Swal.fire({
                     icon: "success",
-                    title: "Paciente No existe, ",
+                    title: "clientes No existe, ",
                     text: "Puede registrarlo.",
                 });
                 // Si la cédula no existe, habilita el botón de guardar
@@ -326,5 +378,5 @@ function validarCedula(event) {
 document.addEventListener("DOMContentLoaded", () => {
     ListarPacientes();
     listarTipoDocumento();
-    // listarDepartamentos();
+    listarDepartamentos();
 });

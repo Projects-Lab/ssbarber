@@ -58,6 +58,11 @@ class ControladorVentas
     {
         return ModeloVentas::mdlListarClientes();
     }
+
+    public static function ctrConsultarConsecutivo()
+    {
+        return ModeloVentas::mdlConsultarConsecutivo();
+    }
 }
 
 $objeto = new ControladorVentas();
@@ -93,7 +98,10 @@ if ($_POST['metodo'] == 'editar_venta') {
 
 if ($_POST['metodo'] == 'agregar_venta') {
     parse_str($_POST['data'], $arrDatos);
-    if ($objeto::ctrAgregarVenta($arrDatos)) {
+    $csc  = $objeto::ctrConsultarConsecutivo();
+    $arrDatos['consecutivo_venta'] = $csc['consecutivo_siguiento'];
+
+   if ($objeto::ctrAgregarVenta($arrDatos)) {
         echo json_encode(["respuesta" => true]);
     } else {
         echo json_encode(["respuesta" => false]);
@@ -117,7 +125,7 @@ if ($_POST['metodo'] == 'listar_ventas') {
         foreach ($data as $value) {
             $list[] = [
                 "fecha" => $value['fecha'],
-                "consecutivo" => $value['consecutivo_venta'],
+                "consecutivo" => 'FV-'.$value['consecutivo_venta'],
                 "cedula_cliente" => $value['numero_identificacion'],
                 "nombres_cliente" => $value['primer_nombre'] . ' ' . $value['segundo_nombre'] . ' ' . $value['primer_apellido'] . ' ' . $value['segundo_apellido'],
                 "producto_nombre" => $value['producto_nombre'],
